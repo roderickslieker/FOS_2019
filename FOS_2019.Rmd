@@ -4,7 +4,8 @@ author: "Roderick Slieker and Bas Heijmans"
 output: github_document
 ---
 
-##Important:
+## Important:
+
 - Download the following files and save them in one folder:
 
 [Tissue data subset.csv](Tissue data subset.csv)
@@ -21,10 +22,12 @@ output: github_document
 -	At the end of the practical send your work to **r.c.slieker@lumc.nl** as Word document with your name(s) on top of the first page. The file name should contain your surname(s). 
 
 
-##Introduction
+## Introduction
+
 **A primary function of DNA methylation, a key component of the epigenome, is to control cell differentiation. In this practical, you will identify and annotate differential methylation between tissues using genome-wide data generated with Illumina 450k chips. The coming few hours you will replicate many of our groups' findings which were published in 2013. Good luck and have fun!**
 
-##Question 1
+## Question 1
+
 **The data that you will use in this practical consists of genome-wide DNA methylation data (Illumina 450k methylation array) of tissues from autopsy samples. Read the file 'Tissue data subset.csv' in R. The file contains the DNA methylation data of a single CpG site with identifier number cg21507095.**
 
 ```{r packages, eval=FALSE}
@@ -65,8 +68,7 @@ anova(lm(cg21507095~Tissue, data=TissueData))
 
 **E Go back to the genome browser. Scroll up and use 'zoom out' to find out: (1) in which gene the CpG is located, (2) what part of the gene it is located (intron, exon, etc.) and (3) whether it is located in a CpG island.**
 
-##Question 2
-
+## Question 2
 
 **You will investigate DNA methylation between tissues across a complete chromosome instead of a single CpG site. Load the file Tissue data chromosome 22.csv with DNA methylation data for chromosome 22 across three tissues. **
 
@@ -147,6 +149,7 @@ head(ResultsChromosome22)
 ```
 
 ## Question 3
+
 **A When measuring many features (here CpGs), one must account for the fact that many statistical tests are being performed. Small P-values will be observed purely by chance. In this case, the number of tests equals the number of CpGs in the file. Which P-value threshold is commonly used to declare an association statistically significant in case of a single statistical test? How many P-values lower than this threshold would you expect by chance in this chromosome 22 data set?**
 
 **B An intuitive and popular (but perhaps somewhat conservative) way to correct the p-value is to multiply the calculated P-value by the number of tests performed or correct the significance level, i.e. divide the P-value threshold for a single test by the total number of tests. This is called Bonferroni correction. What is the Bonferroni-corrected P-value for chromosome 22 (i.e. the threshold for statistical significance after accounting for multiple testing)?**
@@ -228,7 +231,7 @@ head(TissueData22signOrdered)
 **G To gain insight into gene function related to differentially methylation you can use GREAT (Genomic Regions Enrichment of Annotations Tool). Go to the GREAT website (http://bejerano.stanford.edu/great/public/html/index.php). Select human hg19/ GRCh37. Select all significant CpG sites from the csv file and copy the chromosome, start and end column and paste that into test regions (after clicking BED data). Also, copy all CpG sites and paste that into background regions (click BED data). Click Show Settings and select single nearest gene. Click submit and wait (may take some time) until the site has calculated the enrichment in gene categories (Biological processes).  Which biological processes are enriched for differential methylation? How does that relate to the tissues studied?** 
 
 
-## Facultative question: Question 5 
+## Question 5 
 
 **There is increasing evidence that DNA methylation is associated with alternative transcription events. A paper showed that there is a role for intragenic (differential) DNA methylation in the regulation of alternative transcription events (Maunakea AK et al. Conserved role of intragenic DNA methylation in regulating alternative promoters. Nature 2010; 466: 253-7).**
 
