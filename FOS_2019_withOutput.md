@@ -85,9 +85,11 @@ calculate the mean methylation and standard deviation for the tissues.
 Do you think that these differences are biologically relevant?**
 
 ``` r
-ggplot(TissueData, aes(x=Tissue, y=cg21507095, fill=Tissue))+ # Assign variables to x, y, and fill
-    geom_boxplot()+ # Make a boxplot
-    scale_fill_manual(values=c("#F9A23F","#009AC7","#8B1A4F")) # Give custom colors to the boxes using HEX colors
+ggplot(TissueData, aes(x=Tissue, y=cg21507095, color=Tissue))+ # Assign variables to x, y, and fill
+  stat_summary(fun.data = "mean_cl_boot",  size = 1)+
+  geom_jitter(width=0.2)+
+  scale_colour_manual(values=c("#009AC7","#132B41","#F9A23F"))+ # Give custom colors to the boxes using HEX colors
+  ylim(0,1)
 ```
 
 ![](FOS_2019_withOutput_files/figure-gfm/Q1B-1.png)<!-- -->
@@ -149,6 +151,22 @@ they are defined ( right click on the CpG island track, Show details).**
 out: (1) in which gene the CpG is located, (2) what part of the gene it
 is located (intron, exon, etc.) and (3) whether it is located in a CpG
 island.**
+
+**F Navigate to the EWAS datahub
+(<https://bigd.big.ac.cn/ewas/datahub>), search for cg21507095. Click on
+tissue and compare/validate your findings.**
+
+![Tissue](EWAS_Datahub_cg21507095_tissue.png)
+
+**G Navigate to other diseases. From the drop down menu choose type 2
+diabetes. Is there a difference? Is it significant?**
+
+![Diabetes](cg21507095.png)
+
+**H TBX1 has been suggested to play a role in obesity. Go to the BMI tab
+look at the different tissues. What do you conclude?**
+
+![BMI](dna-methylation-changes.png)
 
 ## Question 2
 
@@ -498,13 +516,40 @@ Calculate the odds ratio for proximal promoters, what do you conclude?**
 ``` r
 #Calculate a
 a <- table(TissueData22sign$Gene_centric)["Proximal promoter"]
-n.prox <- table(TissueData22$Gene_centric)["Proximal promoter"]
+a
+```
 
+    ## Proximal promoter 
+    ##               465
+
+``` r
+n.prox <- table(TissueData22$Gene_centric)["Proximal promoter"]
+n.prox
+```
+
+    ## Proximal promoter 
+    ##              4244
+
+``` r
 #Calculate b-d
 b <- n.prox - a
 c <- 1805 - a
 d <- 8463 - a - b - c
+```
 
+**2x2 table**
+
+``` r
+matrix(c(a,b,c,d), ncol=2, byrow = T)
+```
+
+    ##      [,1] [,2]
+    ## [1,]  465 3779
+    ## [2,] 1340 2879
+
+**Odds ratio**
+
+``` r
 #Now calculate the odds ratio
 OR <- (a/b)/(c/d)
 
@@ -577,35 +622,37 @@ statistical evidence for differential methylation.**
 In which gene centric / CGI centric feature are the top-hits? Also
 see/use question 2C.**
 
-**D Zoom out in UCSC for both top-hits. Is the differential methylation
+**D Go through question 1f-h again for the tophit. What do you observe**
+
+**E Zoom out in UCSC for both top-hits. Is the differential methylation
 limited to a single CpG site or does it extend across a region (Use the
 custom track from 4B)? Does this influence your interest in the two CpGs
 and why?**
 
-**E The second lowest top-hit maps to the PARVG gene. How many different
+**F The second lowest top-hit maps to the PARVG gene. How many different
 transcripts can arise from this gene (track UCSC genes)? Do you observe
 differential methylation near alternative transcript start sites for the
 gene?**
 
-**F Look up the nearest gene of the tophits in GeneCards
+**G Look up the nearest gene of the tophits in GeneCards
 (www.genecards.org). Look at the protein expression and the mRNA
 expression for the three tissues studied if available. Is the gene
 expressed in a tissue-specific fashion?**
 
-**G To gain insight into gene function related to differentially
+**H To gain insight into gene function related to differentially
 methylation you can use GREAT (Genomic Regions Enrichment of Annotations
-Tool). Go to the GREAT website
-(<http://bejerano.stanford.edu/great/public/html/index.php>). Select
-human hg19/ GRCh37. Select all significant CpG sites from the csv file
-and copy the chromosome, start and end column and paste that into test
-regions (after clicking BED data). Also, copy all CpG sites and paste
-that into background regions (click BED data). Click Show Settings and
-select single nearest gene. Click submit and wait (may take some time)
-until the site has calculated the enrichment in gene categories
+Tool). Go to the GREAT
+website(<http://bejerano.stanford.edu/great/public/html/index.php>).
+Select human hg19/ GRCh37. Select all significant CpG sites from the csv
+file and copy the chromosome, start and end column and paste that into
+test regions (after clicking BED data). Also, copy all CpG sites and
+paste that into background regions (click BED data). Click Show Settings
+and select single nearest gene. Click submit and wait (may take some
+time) until the site has calculated the enrichment in gene categories
 (Biological processes). Which biological processes are enriched for
 differential methylation? How does that relate to the tissues studied?**
 
-## Question 5
+## Question 5 (Facultative)
 
 **There is increasing evidence that DNA methylation is associated with
 alternative transcription events. A paper showed that there is a role
